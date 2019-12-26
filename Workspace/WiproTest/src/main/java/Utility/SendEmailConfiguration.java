@@ -1,0 +1,144 @@
+package Utility;
+
+import java.util.Date;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import Utility.ExtentRepotEx;
+
+public class SendEmailConfiguration 
+{
+  	    FolderZipClass fz=new FolderZipClass();
+	
+
+	   public static void sendEmailWithAttachments(String host, final String userName, String[] toAddress, String subject, String message, String[] attachFiles, String port, String password) throws AddressException, MessagingException 
+	   {
+	        // sets SMTP server properties
+	        Properties properties = new Properties();
+	        properties.put("mail.smtp.host", host);
+	        properties.put("mail.smtp.port", port);
+	        properties.put("mail.smtp.auth", "true");
+	        properties.put("mail.smtp.starttls.enable", "true");
+	        properties.put("mail.user", userName);
+	        properties.put("mail.password", password);
+	 
+	        // creates a new session with an authenticator
+	        
+	        
+	          @SuppressWarnings("unused")
+			  Authenticator auth = new Authenticator() 
+	          {
+	                public PasswordAuthentication getPasswordAuthentication() 
+	                {
+	                   return new PasswordAuthentication(userName,password);
+	                }
+	            };
+	      
+	        
+	        Session session = Session.getInstance(properties);
+	        
+	        // creates a new e-mail message
+	        Message msg = new MimeMessage(session);
+	 
+	        msg.setFrom(new InternetAddress(userName));
+	        InternetAddress[] toAddresses1 = new InternetAddress[toAddress.length];
+	        
+	        for(int i=0;i<toAddress.length;i++)
+	        {
+	        	toAddresses1[i] = new InternetAddress(toAddress[i]);
+	        }
+	        
+	        msg.setRecipients(Message.RecipientType.TO, toAddresses1);
+	        msg.setSubject(subject);
+	        msg.setSentDate(new Date());
+	 
+	        // creates message part
+	        MimeBodyPart messageBodyPart = new MimeBodyPart();
+	        messageBodyPart.setContent(message, "text/html");
+	 
+	        // creates multi-part
+	        Multipart multipart = new MimeMultipart();
+	        multipart.addBodyPart(messageBodyPart);
+	 
+	        // adds attachments
+	        if (attachFiles != null && attachFiles.length > 0) 
+	        {
+	            for (String filePath : attachFiles) 
+	            {
+	                MimeBodyPart attachPart = new MimeBodyPart();
+	 
+	                try 
+	                {
+	                    attachPart.attachFile(filePath);
+	                }
+	                catch (Exception ex)
+	                {
+	                    ex.printStackTrace();
+	                }
+	 
+	                multipart.addBodyPart(attachPart);
+	            }
+	        }
+	 
+	        // sets the multi-part as e-mail's content
+	        msg.setContent(multipart);
+	 
+	        // sends the e-mail
+	        Transport.send(msg);
+	 
+	    }
+	 public void sendEmail()
+	 {
+		 String host ="http://smtp.gmail.com";
+		 @SuppressWarnings("unused")
+		 String port = "587";
+		 String mailFrom = "nakumajit@gmail.com";
+		 @SuppressWarnings("unused")
+		 String password = ""; // If send the report then define the password over here
+
+	   // message info
+		     String[] mailTo = new String[3];
+		     mailTo[0] = "nakumajit@gmail.com";
+		//   mailTo[1] = "";
+		//   mailTo[2] = "";
+
+	    
+	    
+	  //String mailTo = "nakumajit@gmail.com";
+	    String subject = "Automation Report";
+	    String message = "Automation Report";
+
+        String reportPath="D:\\Automation\\Projects\\Workspace\\WiproTest\\Reports\\Report_"+ExtentRepotEx.timestamp;
+	    String[] attachFiles = new String[2];
+	    attachFiles[0] = reportPath+"."+"zip";
+	  
+	    
+	    try 
+	    {
+	    	fz.ZipFolder_method();
+	    	Thread.sleep(8000);
+	    	sendEmailWithAttachments(host, mailFrom, mailTo,
+	        subject, message, attachFiles);
+	        System.out.println("Email has been sent.");
+	    } catch (Exception ex) 
+	      {
+	         System.out.println("Could not send email.");
+	         ex.printStackTrace();
+	      }
+	}
+	private void sendEmailWithAttachments(String host, String mailFrom, String[] mailTo, String subject, String message,
+			String[] attachFiles) {
+		// TODO Auto-generated method stub
+		
+	}
+}

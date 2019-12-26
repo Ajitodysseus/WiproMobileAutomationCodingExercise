@@ -1,0 +1,20 @@
+package Implementation;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class CardDetails 
+{
+	
+	@FindBy(xpath="//*[contains(text(), 'Card number')]")
+	private WebElement numbr;
+	
+	
+	public void SearchItems(String Itm)
+	{
+		Srch.sendKeys(Itm);
+		btn.click();
+		
+	}
+
+}

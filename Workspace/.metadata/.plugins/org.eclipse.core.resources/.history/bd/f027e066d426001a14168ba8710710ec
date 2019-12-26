@@ -1,0 +1,25 @@
+package Implementation;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class SearchItem 
+{
+    static WebDriver wd;
+	
+	@FindBy(xpath="//*[contains(text(), 'Search')]")
+	private WebElement Srch;
+	
+	@FindBy(xpath="//input[@type='submit']")
+	private WebElement btn;
+	
+	
+	public void SearchItems(String Itm)
+	{
+		Srch.sendKeys(Itm);
+		btn.click();
+		
+	}
+
+}

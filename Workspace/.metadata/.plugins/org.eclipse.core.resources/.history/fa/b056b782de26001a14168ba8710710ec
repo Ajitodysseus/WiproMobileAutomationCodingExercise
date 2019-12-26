@@ -1,0 +1,35 @@
+package Implementation;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class SearchItem 
+{
+	
+	@FindBy(xpath="//*[contains(text(), 'Search')]")
+	private WebElement Srch;
+	
+	@FindBy(xpath="//input[@type='submit']")
+	private WebElement btn;
+	
+	@FindBy(xpath="//*[contains(text(), 'Sony Bravia 163.9 cm (65 inches) 4K UHD Certified Android LED TV KD-65X8000G (Black) (2019 Model)')]")
+	private WebElement product;
+	
+	
+	
+	public void SearchItems(String Itm)
+	{
+		Srch.sendKeys(Itm);
+		btn.click();
+		
+	}
+	
+	public void SelectItem(String Itm)
+	{
+		Srch.sendKeys(Itm);
+		btn.click();
+		
+	}
+
+}

@@ -1,0 +1,24 @@
+package Implementation;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class SearchItem 
+{
+    static WebDriver wd;
+	
+	@FindBy(xpath="//*[contains(text(), 'Already a customer? Sign In')]")
+	private WebElement Srch;
+	
+	
+	public void SignIn(String Mbl, String paswrd)
+	{
+		Createacc.click();
+		MobileNo.sendKeys(Mbl);
+		cntinue.click();
+		Pwd.sendKeys(paswrd);
+		lgn.click();
+	}
+
+}

@@ -1,0 +1,30 @@
+package Implementation;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class Login 
+{
+
+	static WebDriver wd;
+	
+	@FindBy(id="")
+	private WebElement Createacc;
+	
+	
+	
+	public void CreateAccnt()
+	{
+		
+	}
+	
+	
+	
+	public boolean isDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+
+}
